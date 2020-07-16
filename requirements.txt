@@ -1,2 +1,2 @@
 flask
-tvdsb_student
+tvdsb-student-api
