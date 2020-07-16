@@ -3,11 +3,11 @@
     "name": "student_portal",
     "builds": [
         {
-            "src": "src/routes/**/*.py",
+            "src": "**/*.py",
             "use": "@now/python@canary"
         },
         {
-            "src": "src/css/**",
+            "src": "css/**",
             "use": "@now/static"
         }
     ]
