@@ -9,6 +9,10 @@
         {
             "src": "css/**",
             "use": "@now/static"
+        },
+        {
+            "src": "**/*.html",
+            "use": "@now/static"
         }
     ]
 }
