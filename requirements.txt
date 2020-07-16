@@ -1,2 +1,3 @@
 flask
+pytest-cov
 tvdsb-student-api
