@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "student_portal",
+    "builds": [
+        {
+            "src": "src/routes/**/*.py",
+            "use": "@now/python@canary"
+        },
+        {
+            "src": "src/css/**",
+            "use": "@now/static"
+        }
+    ]
+}
