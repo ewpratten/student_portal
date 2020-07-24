@@ -19,24 +19,50 @@ function login() {
   Http.send(form);
 
   // Handle response
-	Http.onreadystatechange = (e) => {
+  Http.onreadystatechange = (e) => {
+    // Get response data
+    var response = JSON.parse(Http.response);
 
-		// Get response data
-		var response = JSON.parse(Http.response);
+    // Handle failed auth
+    if (!response.success) {
+      // Show the "invalid login" page
+      document.getElementById("invalid-login").classList.remove("hidden");
 
-		console.log(response)
+      // Stop the spinner
+      spinner.classList.add("hidden");
+    } else {
+      // Set the cookie
+      setCookie("auth_token", response.token);
 
-		// Stop the spinner
-		spinner.classList.add("hidden");
-	  
-		// Handle failed auth
-		if (!response.success) {
-			document.getElementById("invalid-login").classList.remove("hidden");
-		} else {
-			
-			// Set the cookie
-			setCookie("auth_token", response.token);
-			document.location = "/";
-		}
+      // Make secondary API call to get student info
+      _getStudentInfo();
+    }
+  };
+}
+
+function _getStudentInfo() {
+  // Make info call
+  const Http = new XMLHttpRequest();
+  const url =
+    "https://api.retrylife.ca/tvdsb/student/timetable?token=" +
+    getCookie("auth_token");
+  Http.open("GET", url);
+  Http.send();
+
+  // Handle response
+  Http.onreadystatechange = (e) => {
+    // Get response data
+    var response = JSON.parse(Http.response);
+
+    // Store student info
+    setCookie("fname", response.timetable.student_info.name[0]);
+    setCookie("lname", response.timetable.student_info.name[1]);
+    setCookie("grade", response.timetable.student_info.grade);
+    setCookie("locker", response.timetable.student_info.locker_number);
+    setCookie("oen", response.timetable.student_info.ontario_education_number);
+    setCookie("sin", response.timetable.student_info.student_number);
+
+    // Go to main page
+    document.location = "/";
   };
 }

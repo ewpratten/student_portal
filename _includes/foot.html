@@ -11,7 +11,17 @@
 <script src="/assets/js/cookies.js"></script>
 <script>
     function logout() {
+
+        // Clear personal info
         setCookie("auth_token", "");
+        setCookie("fname", "");
+        setCookie("lname", "");
+        setCookie("grade", "");
+        setCookie("locker", "");
+        setCookie("oen", "");
+        setCookie("sin", "");
+
+        // Go home
         document.location = "/";
     }
 </script>

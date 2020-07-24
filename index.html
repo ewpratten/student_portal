@@ -12,8 +12,24 @@
     {% include nav.html %}
 
     <div class="container">
-        <h1>Welcome Name</h1>
-        <p>We are glad to have you back</p>
+
+        <div style="height:25vh"></div>
+        <div class="center">
+            <h1>Hello <value id="fname">{Name}</value>
+            </h1>
+            <p>Please select an option from below</p>
+        </div>
+
+        <br>
+
+        <ul class="list-group restrictedwidth center">
+            <li class="list-group-item"><a href="/attendance">View Attendance</a></li>
+            <li class="list-group-item"><a href="/marks">View Marks</a></li>
+            <li class="list-group-item"><a href="/timetable">View Timetable</a></li>
+            <li class="list-group-item"><a href="/studentinfo">View my Information</a></li>
+            <li class="list-group-item"><a href="/about">About this site</a></li>
+        </ul>
+
     </div>
 
     {% include foot.html %}
@@ -22,10 +38,15 @@
     <script src="/assets/js/cookies.js"></script>
     <script src="/assets/js/navbar.js"></script>
     <script>
-        if(!cookieExists("auth_token")){
+        if (!cookieExists("auth_token")) {
             console.log("Redirecting to login page");
             document.location = "/login";
         }
+    </script>
+
+    <!-- Display student name -->
+    <script>
+        document.getElementById("fname").innerText = getCookie("fname");
     </script>
 
 </body>

@@ -1,0 +1,88 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include head.html %}
+</head>
+
+<body>
+
+    {% include nav.html %}
+
+    <div class="container">
+
+        <div style="height:25vh"></div>
+        <div class="center">
+            <h1>You are <value id="fname">{First}</value>
+                <value id="lname">{Last}</value>
+            </h1>
+            <p>Here is the info TVDSB has about you:</p>
+        </div>
+
+        <br>
+
+        <table class="table restrictedwidth">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Entry</th>
+                    <th scope="col">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Grade</th>
+                    <td>
+                        <value id="grade">{grade}</value>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Locker #</th>
+                    <td>
+                        <value id="locker">{locker}</value>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">OEN #</th>
+                    <td>
+                        <value id="oen">{oen}</value>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Student #</th>
+                    <td>
+                        <value id="sin">{sin}</value>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    {% include foot.html %}
+
+    <!-- Auth redirect handler -->
+    <script src="/assets/js/cookies.js"></script>
+    <script src="/assets/js/navbar.js"></script>
+    <script>
+        if (!cookieExists("auth_token")) {
+            console.log("Redirecting to login page");
+            document.location = "/login";
+        }
+    </script>
+
+    <!-- Display student name -->
+    <script>
+        document.getElementById("fname").innerText = getCookie("fname");
+        document.getElementById("lname").innerText = getCookie("lname");
+        document.getElementById("grade").innerText = getCookie("grade");
+        var locker = getCookie("locker");
+        document.getElementById("locker").innerText = (locker != "null") ? locker : "???";
+        document.getElementById("oen").innerText = getCookie("oen");
+        document.getElementById("sin").innerText = getCookie("sin");
+    </script>
+
+</body>
+
+</html>
