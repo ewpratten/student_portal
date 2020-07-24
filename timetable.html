@@ -1,0 +1,68 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include head.html %}
+</head>
+
+<body>
+
+    {% include nav.html %}
+
+    <div class="container">
+
+        <div style="height:25vh"></div>
+        <div class="center">
+            <h1>Timetable</h1>
+            <p>Here is your current / upcoming timetable(s):</p>
+        </div>
+
+        <div id="semesters">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+        </div>
+
+    </div>
+
+    {% include foot.html %}
+
+    <!-- Auth redirect handler -->
+    <script src="/assets/js/cookies.js"></script>
+    <script src="/assets/js/navbar.js"></script>
+    <script>
+        if (!cookieExists("auth_token")) {
+            console.log("Redirecting to login page");
+            document.location = "/login";
+        }
+    </script>
+
+    <!-- Build tables for courses -->
+    <script src="/assets/js/timetable.js"></script>
+    <script>
+
+        // Get timetable data
+        getTimetable((timetable) => {
+
+            // Build all tables
+            var html = ""
+            for (let i = 0; i < timetable.timetable.course_semesters.length; i++) {
+
+                // Add to the semesters list
+                html += generateEntireSemester(i + 1, timetable.timetable.course_semesters[i]);
+
+            }
+
+            // Set the content div to contain the HTML
+            document.getElementById("semesters").innerHTML = html;
+        })
+    </script>
+
+
+</body>
+
+</html>
