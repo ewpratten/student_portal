@@ -1,0 +1,17 @@
+body {
+    background-color: #fbfbfb;
+}
+
+.container {
+    background-color: white;
+    min-height: 100vh;
+}
+
+.center {
+    text-align: center;
+}
+
+.loginform {
+    max-width: 500px;
+    margin: auto;
+}

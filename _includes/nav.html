@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+        aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Branding -->
+    <a class="navbar-brand" href="/">{{site.title}}</a>
+
+    <!-- This section should only be visible to logged-in users -->
+    <div id="navbar-auth-only" style="width:100%">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/attendance">Attendance</a></li>
+                <li class="nav-item"><a class="nav-link" href="/marks">Marks</a></li>
+                <li class="nav-item"><a class="nav-link" href="/timetable">Timetable</a></li>
+            </ul>
+            <button class="btn btn-sm btn-outline-warning" onclick="logout();">Log Out</button>
+        </div>
+    </div>
+</nav>

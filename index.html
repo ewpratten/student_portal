@@ -1,0 +1,33 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include head.html %}
+</head>
+
+<body>
+
+    {% include nav.html %}
+
+    <div class="container">
+        <h1>Welcome Name</h1>
+        <p>We are glad to have you back</p>
+    </div>
+
+    {% include foot.html %}
+
+    <!-- Auth redirect handler -->
+    <script src="/assets/js/cookies.js"></script>
+    <script src="/assets/js/navbar.js"></script>
+    <script>
+        if(!cookieExists("auth_token")){
+            console.log("Redirecting to login page");
+            document.location = "/login";
+        }
+    </script>
+
+</body>
+
+</html>

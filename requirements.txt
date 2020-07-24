@@ -1,2 +1,0 @@
-flask
-tvdsb-student-api>=1.6

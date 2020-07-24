@@ -1,0 +1,9 @@
+title: Student Portal
+description: >- # this means to ignore newlines until "baseurl:"
+  An unofficial frontend for the TVDSB student portal
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://studentportal.retrylife.ca" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Build settings
+# plugins:
+#   - jekyll-feed

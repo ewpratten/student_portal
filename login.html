@@ -1,0 +1,59 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include head.html %}
+</head>
+
+<body>
+
+    {% include nav.html %}
+
+    <div class="container">
+
+        <!-- Spacer -->
+        <div style="height:25vh;"></div>
+
+        <div class="center">
+            <h1>Student Login</h1>
+            <p>Please log in with your TVDSB student ID</p>
+        </div>
+        <br>
+
+        <!-- Auth scripts -->
+        <script src="/assets/js/cookies.js"></script>
+        <script src="/assets/js/navbar.js"></script>
+        <script src="/assets/js/loginpage.js"></script>
+
+        <form onsubmit="login();return false" class="loginform">
+            <div class="form-group">
+                <input type="text" class="form-control" id="sidInput" aria-describedby="sidHelp"
+                    placeholder="Enter Student ID">
+                <small id="sidHelp" class="form-text text-muted">Your login info is only stored in your browser's
+                    cookies</small>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="password" placeholder="Password">
+                <div class="alert alert-danger hidden" role="alert" id="invalid-login">
+                    Your login was invalid
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <span class="spinner-border spinner-border-sm hidden" id="waiting_for_auth" role="status"
+                    aria-hidden="true"></span>
+                Log In
+            </button>
+
+        </form>
+
+    </div>
+
+    {% include foot.html %}
+
+
+
+</body>
+
+</html>
