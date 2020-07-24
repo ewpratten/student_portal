@@ -1,0 +1,73 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include head.html %}
+</head>
+
+<body>
+
+    {% include nav.html %}
+
+    <div class="container">
+
+        <div style="height:25vh"></div>
+        <div class="center">
+            <h1>Attendance</h1>
+            <p>Here are your attendance records for the current semester:</p>
+        </div>
+        <br>
+
+        <div id="records">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {% include foot.html %}
+
+    <!-- Auth redirect handler -->
+    <script src="/assets/js/cookies.js"></script>
+    <script src="/assets/js/navbar.js"></script>
+    <script>
+        if (!cookieExists("auth_token")) {
+            console.log("Redirecting to login page");
+            document.location = "/login";
+        }
+    </script>
+
+    <!-- Build tables for courses -->
+    <script src="/assets/js/attendance.js"></script>
+    <script>
+
+        // Get attendance data
+        getAttendance((attendance) => {
+
+            // Build all tables
+            var records = [];
+            attendance.records.forEach((record) => {
+                    // Generate a row for the record
+                    records.push(generateRecordRow(record.date, record.course_code, record.period, record.code, record.reason));
+              
+            })
+
+            // Set the content div to contain the HTML
+            document.getElementById("records").innerHTML = generateAttendanceTable(records);
+
+            // Handle no records
+            if (records.length == 0) {
+                document.getElementById("records").innerHTML += "<div class='center'><h3>You have no attendance incidents on file for this year</h3></div>"
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>
