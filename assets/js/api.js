@@ -1,6 +1,6 @@
 endpoints = {
-  prod: "https://api.retryliife.ca",
-  beta: "https://beta.api.retryliife.ca",
+  prod: "https://api.retrylife.ca",
+  beta: "https://beta.api.retrylife.ca",
   local: "http://localhost:5000",
 };
 
