@@ -60,10 +60,9 @@ function generateEntireSemester(semester, data) {
 function getTimetable(callback) {
   // Make info call
   const Http = new XMLHttpRequest();
-  const url =
-    "https://api.retrylife.ca/tvdsb/student/timetable?token=" +
-    getCookie("auth_token");
+  const url = API_ENDPOINT + "/tvdsb/student/timetable";
   Http.open("GET", url);
+  Http.setRequestHeader("Authorization", "Basic " + getCookie("auth_token_2"));
   Http.send();
 
   // Handle response

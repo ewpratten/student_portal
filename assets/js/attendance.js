@@ -44,10 +44,9 @@ function generateRecordRow(date, course, period, code, reason) {
 function getAttendance(callback) {
   // Make info call
   const Http = new XMLHttpRequest();
-  const url =
-    "https://api.retrylife.ca/tvdsb/student/attendance?token=" +
-    getCookie("auth_token");
+  const url = API_ENDPOINT + "/tvdsb/student/attendance";
   Http.open("GET", url);
+  Http.setRequestHeader("Authorization", "Basic " + getCookie("auth_token_2"));
   Http.send();
 
   // Handle response

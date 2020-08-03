@@ -14,7 +14,7 @@ function login() {
 
   // Make auth call
   const Http = new XMLHttpRequest();
-  const url = "https://api.retrylife.ca/tvdsb/student/auth";
+  const url = API_ENDPOINT + "/tvdsb/student/auth";
   Http.open("POST", url);
   Http.send(form);
 
@@ -32,7 +32,7 @@ function login() {
       spinner.classList.add("hidden");
     } else {
       // Set the cookie
-      setCookie("auth_token", response.token);
+      setCookie("auth_token_2", response.token);
 
       // Make secondary API call to get student info
       _getStudentInfo();
@@ -43,10 +43,9 @@ function login() {
 function _getStudentInfo() {
   // Make info call
   const Http = new XMLHttpRequest();
-  const url =
-    "https://api.retrylife.ca/tvdsb/student/timetable?token=" +
-    getCookie("auth_token");
+  const url = API_ENDPOINT + "/tvdsb/student/timetable";
   Http.open("GET", url);
+  Http.setRequestHeader("Authorization", "Basic " + getCookie("auth_token_2"));
   Http.send();
 
   // Handle response

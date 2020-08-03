@@ -34,9 +34,10 @@
 
     <!-- Auth redirect handler -->
     <script src="/assets/js/cookies.js"></script>
+    <script src="/assets/js/api.js"></script>
     <script src="/assets/js/navbar.js"></script>
     <script>
-        if (!cookieExists("auth_token")) {
+        if (!cookieExists("auth_token_2")) {
             console.log("Redirecting to login page");
             document.location = "/login";
         }
