@@ -189,7 +189,7 @@
 
                 // Average, and fill in to chartJS data
                 data.labels.push(key);
-                data.datasets[0].data.push(accumulator / entries);
+                data.datasets[0].data.push(Math.round(accumulator / entries));
 
             })
 
@@ -203,7 +203,7 @@
             })
             avg /= data.datasets[0].data.length;
             avg = Math.round(avg);
-            document.getElementById("rating_data").innerHTML += '<div class="progress"><div class="progress-bar bg-info" role="progressbar" style="width: '+avg+'%" aria-valuenow="'+avg+'" aria-valuemin="0" aria-valuemax="100">Progress</div></div><br>';            
+            document.getElementById("rating_data").innerHTML += '<div class="progress"><div class="progress-bar bg-info" role="progressbar" style="width: ' + avg + '%" aria-valuenow="' + avg + '" aria-valuemin="0" aria-valuemax="100">Progress</div></div><br>';
 
             // Create a balance chart
             document.getElementById("rating_data").innerHTML += "<canvas id='balance_ctx'></canvas>";
@@ -220,7 +220,7 @@
                 }
             })
 
-            
+
 
 
         })
