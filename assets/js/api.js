@@ -4,4 +4,4 @@ endpoints = {
   local: "http://localhost:5000",
 };
 
-API_ENDPOINT = endpoints.beta;
+API_ENDPOINT = endpoints.prod;
