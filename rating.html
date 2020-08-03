@@ -1,0 +1,141 @@
+---
+---
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include head.html %}
+</head>
+
+<body>
+
+    {% include nav.html %}
+
+    <div class="container">
+
+        <div style="height:25vh"></div>
+        <div class="center">
+            <h1>Student rating</value>
+            </h1>
+            <p>All students have been assigned an objective score based on their data.<br>This is not an official TVDSB feature</p>
+        </div>
+
+        <br>
+
+        <div id="rating_data">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+
+       
+
+    </div>
+
+    {% include foot.html %}
+
+    <!-- Auth redirect handler -->
+    <script src="/assets/js/cookies.js"></script>
+    <script src="/assets/js/navbar.js"></script>
+    <script>
+        if (!cookieExists("auth_token")) {
+            console.log("Redirecting to login page");
+            document.location = "/login";
+        }
+    </script>
+
+    <!-- Analyze marking data -->
+    <script src="/assets/js/marks.js"></script>
+    <script>
+
+        // Mapping of all course prefixes to a title
+        // This data is manually scraped from the HB Beal course calendar
+        course_pref_mapping = {
+            "NA":"FNMI",
+            "NB":"FNMI",
+            "ND":"FNMI",
+            "ND":"FNMI",
+            "LN":"FNMI",
+            "AT":"The Arts",
+            "AD":"The Arts",
+            "AM":"The Arts",
+            "AV":"The Arts",
+            "AW":"The Arts",
+            "BA":"Business",
+            "IC":"Computer Science",
+            "BD":"Business",
+            "BT":"Business",
+            "BB":"Business",
+            "BM":"Business",
+            "ID":"Interdisciplinary",
+            "BO":"Business",
+            "CI":"World Studies",
+            "CG":"World Studies",
+            "CH":"History",
+            "CL":"Law",
+            "EN":"English",
+            "OL":"English",
+            "EM":"Media",
+            "EP":"English",
+            "EW":"English",
+            "ET":"English",
+            "ES":"English",
+            "EL":"English",
+            "GL":"Learning",
+            "GL":"Learning",
+            "MA":"Math",
+            "SN":"Science",
+            "HI":"Life Management",
+            "GW":"Life Management",
+            "GP":"Leadership",
+            "PP":"Health",
+            "PA":"Health",
+            "PL":"Health",
+            "PS":"Health",
+            "MF":"Math",
+            "MP":"Math",
+            "ME":"Math",
+            "MB":"Math",
+            "MC":"Math",
+            "MH":"Math",
+            "MD":"Math",
+            "FS":"French",
+            "LW":"Spanish",
+            "SV":"Science",
+            "SB":"Science",
+            "SC":"Science",
+            "SP":"Science",
+            "SN":"Science",
+            "HP":"Family",
+            "HL":"Family",
+            "HI":"Family",
+            "HH":"Family",
+            "HF":"Food",
+            "HN":"Fashion",
+            "HR":"Religion",
+            "HS":"Social Studies",
+            "HZ":"Philosophy",
+            "TD":"Sewing",
+            "TG":"Comm. Tech",
+            "TE":"Computer Engineering",
+            "TC":"Construction",
+            "TD":"Construction",
+            "TW":"Construction",
+            "TM":"Manufacturing",
+            "TX":"Aesthetics",
+            "TT":"Transportation",
+        }
+
+        // Get marks data
+        getMarks((data) => {
+
+        })
+
+    </script>
+
+
+</body>
+
+</html>
