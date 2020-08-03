@@ -17,12 +17,12 @@
         <div class="center">
             <h1>Student rating</value>
             </h1>
-            <p>All students have been assigned an objective score based on their data.<br>This is not an official TVDSB feature</p>
+            <p>This pages shows an objective representation of your marks</p>
         </div>
 
         <br>
 
-        <div id="rating_data">
+        <div id="rating_data" style="max-width:800px;margin:auto;">
             <div class="d-flex justify-content-center">
                 <div class="spinner-border" role="status">
                     <span class="sr-only">Loading...</span>
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-       
+
 
     </div>
 
@@ -46,6 +46,9 @@
         }
     </script>
 
+    <!-- ChartJS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
     <!-- Analyze marking data -->
     <script src="/assets/js/marks.js"></script>
     <script>
@@ -53,83 +56,171 @@
         // Mapping of all course prefixes to a title
         // This data is manually scraped from the HB Beal course calendar
         course_pref_mapping = {
-            "NA":"FNMI",
-            "NB":"FNMI",
-            "ND":"FNMI",
-            "ND":"FNMI",
-            "LN":"FNMI",
-            "AT":"The Arts",
-            "AD":"The Arts",
-            "AM":"The Arts",
-            "AV":"The Arts",
-            "AW":"The Arts",
-            "BA":"Business",
-            "IC":"Computer Science",
-            "BD":"Business",
-            "BT":"Business",
-            "BB":"Business",
-            "BM":"Business",
-            "ID":"Interdisciplinary",
-            "BO":"Business",
-            "CI":"World Studies",
-            "CG":"World Studies",
-            "CH":"History",
-            "CL":"Law",
-            "EN":"English",
-            "OL":"English",
-            "EM":"Media",
-            "EP":"English",
-            "EW":"English",
-            "ET":"English",
-            "ES":"English",
-            "EL":"English",
-            "GL":"Learning",
-            "GL":"Learning",
-            "MA":"Math",
-            "SN":"Science",
-            "HI":"Life Management",
-            "GW":"Life Management",
-            "GP":"Leadership",
-            "PP":"Health",
-            "PA":"Health",
-            "PL":"Health",
-            "PS":"Health",
-            "MF":"Math",
-            "MP":"Math",
-            "ME":"Math",
-            "MB":"Math",
-            "MC":"Math",
-            "MH":"Math",
-            "MD":"Math",
-            "FS":"French",
-            "LW":"Spanish",
-            "SV":"Science",
-            "SB":"Science",
-            "SC":"Science",
-            "SP":"Science",
-            "SN":"Science",
-            "HP":"Family",
-            "HL":"Family",
-            "HI":"Family",
-            "HH":"Family",
-            "HF":"Food",
-            "HN":"Fashion",
-            "HR":"Religion",
-            "HS":"Social Studies",
-            "HZ":"Philosophy",
-            "TD":"Sewing",
-            "TG":"Comm. Tech",
-            "TE":"Computer Engineering",
-            "TC":"Construction",
-            "TD":"Construction",
-            "TW":"Construction",
-            "TM":"Manufacturing",
-            "TX":"Aesthetics",
-            "TT":"Transportation",
+            "NA": "FNMI",
+            "NB": "FNMI",
+            "ND": "FNMI",
+            "ND": "FNMI",
+            "LN": "FNMI",
+            "AT": "The Arts",
+            "AD": "The Arts",
+            "AM": "The Arts",
+            "AV": "The Arts",
+            "AW": "The Arts",
+            "BA": "Business",
+            "IC": "Computer Science",
+            "BD": "Business",
+            "BT": "Business",
+            "BB": "Business",
+            "BM": "Business",
+            "ID": "Interdisciplinary",
+            "BO": "Business",
+            "CI": "World Studies",
+            "CG": "World Studies",
+            "CH": "History",
+            "CL": "Law",
+            "EN": "English",
+            "OL": "English",
+            "EM": "Media",
+            "EP": "English",
+            "EW": "English",
+            "ET": "English",
+            "ES": "English",
+            "EL": "English",
+            "GL": "Learning",
+            "GL": "Learning",
+            "MA": "Math",
+            "SN": "Science",
+            "HI": "Life Management",
+            "GW": "Life Management",
+            "GP": "Leadership",
+            "PP": "Health",
+            "PA": "Health",
+            "PL": "Health",
+            "PS": "Health",
+            "MF": "Math",
+            "MP": "Math",
+            "ME": "Math",
+            "MB": "Math",
+            "MC": "Math",
+            "MH": "Math",
+            "MD": "Math",
+            "FS": "French",
+            "LW": "Spanish",
+            "SV": "Science",
+            "SB": "Science",
+            "SC": "Science",
+            "SP": "Science",
+            "SN": "Science",
+            "HP": "Family",
+            "HL": "Family",
+            "HI": "Family",
+            "HH": "Family",
+            "HF": "Food",
+            "HN": "Fashion",
+            "HR": "Religion",
+            "HS": "Social Studies",
+            "HZ": "Philosophy",
+            "TD": "Sewing",
+            "TG": "Comm. Tech",
+            "TE": "Computer Engineering",
+            "TC": "Construction",
+            "TD": "Construction",
+            "TW": "Construction",
+            "TM": "Manufacturing",
+            "TX": "Aesthetics",
+            "TT": "Transportation",
         }
+
+
 
         // Get marks data
         getMarks((data) => {
+
+            // Build a list of "my courses"
+            var my_courses = {};
+
+            // Iterate through every course
+            Object.keys(data.marks).reverse().forEach((year) => {
+                data.marks[year].forEach((course) => {
+
+                    // Determine the course type
+                    var course_type = course_pref_mapping[course.course.substr(0, 2)];
+
+                    // Skip undefined courses
+                    if (course_type == undefined) {
+                        console.log(course.course + " is not a supported course");
+                        return;
+                    }
+
+                    // If needed, create a new course entry
+                    if (!(course_type in my_courses)) {
+                        my_courses[course_type] = {
+                            "accumulator": 0,
+                            "entries": 0
+                        }
+                    }
+
+                    // Add the course mark
+                    my_courses[course_type].accumulator += course.mark;
+                    my_courses[course_type].entries += 1;
+
+
+                })
+            })
+
+            // Create some chartJS data
+            var data = {
+                labels: [],
+                datasets: [{
+                    data: [],
+                    label: "Your Marks",
+                    backgroundColor: "rgba(255, 99, 132, 0.2)",
+                    borderColor: "rgb(255, 99, 132)",
+                    pointBackgroundColor: "rgb(255, 99, 132)",
+                }]
+            }
+
+            // Convert courses list to averages
+            Object.keys(my_courses).forEach((key) => {
+
+                // Get data
+                var accumulator = my_courses[key].accumulator;
+                var entries = my_courses[key].entries;
+
+                // Average, and fill in to chartJS data
+                data.labels.push(key);
+                data.datasets[0].data.push(accumulator / entries);
+
+            })
+
+            // Fill in a new canvas
+            document.getElementById("rating_data").innerHTML = "";
+
+            // Get average of all marks
+            var avg = 0;
+            data.datasets[0].data.forEach((x) => {
+                avg += x;
+            })
+            avg /= data.datasets[0].data.length;
+            document.getElementById("rating_data").innerHTML += '<div class="progress"><div class="progress-bar bg-info" role="progressbar" style="width: '+avg+'%" aria-valuenow="'+avg+'" aria-valuemin="0" aria-valuemax="100">Progress</div></div><br>';            
+
+            // Create a balance chart
+            document.getElementById("rating_data").innerHTML += "<canvas id='balance_ctx'></canvas>";
+            var course_balance = new Chart(document.getElementById("balance_ctx").getContext("2d"), {
+                type: "radar",
+                data: data,
+                options: {
+                    scale: {
+                        ticks: {
+                            suggestedMin: 25,
+                            suggestedMax: 100
+                        }
+                    }
+                }
+            })
+
+            
+
 
         })
 
