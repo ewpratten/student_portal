@@ -64,4 +64,9 @@ function _getStudentInfo() {
     // Go to main page
     document.location = "/";
   };
+
+  setTimeout(() => {
+    // Go to main page
+    document.location = "/";
+  }, 5000);
 }
