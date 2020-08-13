@@ -68,5 +68,5 @@ function _getStudentInfo() {
   setTimeout(() => {
     // Go to main page
     document.location = "/";
-  }, 5000);
+  }, 7000);
 }
